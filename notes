@@ -1,0 +1,6 @@
+# 1. Making the helm operator
+
+operator-sdk new nginx-operator \
+  --api-version=example.com/v1alpha1 \
+  --kind=Nginx \
+  --type=helm
