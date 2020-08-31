@@ -4,3 +4,37 @@ operator-sdk new nginx-operator \
   --api-version=example.com/v1alpha1 \
   --kind=Nginx \
   --type=helm
+
+# 2. Observe the artifacts created.
+# - The helm chart in nginx-operator/
+# - Try creating the helm chart sample 
+# - The watches.yaml and operator around it that does the actual operator part of it
+#   - Observe build/Dockerfile
+#   - Observe watches.yaml
+#
+# - Optional: try running the operator locally:
+#   - Login to k8s cluster
+#   - operator-sdk run --local
+#   - oc apply -f deploy/crds/example.com_v1alpha1_nginx_cr.yaml
+
+# 3. Generating a ClusterServiceVersion (CSV) catalog
+# - Use the operator-sdk tool:
+operator-sdk generate csv --csv-version 0.1.0
+
+# - Or use the CSV generator online:
+# https://operatorhub.io/packages
+
+# 4. Publishing your operator:
+# https://github.com/operator-framework/community-operators/tree/master/community-operators/enc-key-sync
+
+# Testing your bundles before upstreaming: 
+# For basic setup, you can use: https://github.com/operator-framework/community-operators testing framework that uses kind
+#
+# For testing it with OpenShift, ecosystem, it is slightly more involved...
+operator-sdk bundle create docker.io/lumjjb/nginx-test-operator:v0.1.0
+
+# Helpful Links
+# - https://github.com/operator-framework/community-operators
+# - https://docs.openshift.com/container-platform/4.5/operators/operator_sdk/osdk-helm.html
+# - https://docs.openshift.com/container-platform/4.5/operators/operator_sdk/osdk-working-bundle-images.html#osdk-working-bundle-images
+# - https://docs.openshift.com/container-platform/4.5/operators/olm-managing-custom-catalogs.html#olm-managing-custom-catalogs-bundle-format
