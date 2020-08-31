@@ -1,3 +1,6 @@
+# Talk about Operators and Operatorhub
+https://operatorhub.io/getting-started
+
 # 1. Making the helm operator
 
 operator-sdk new nginx-operator \
@@ -54,6 +57,22 @@ opm index add \
     --bundles docker.io/lumjjb/nginx-test-operator-bundle:v0.1.0 \
     --tag docker.io/lumjjb/nginx-test-operator-catalog:v0.1.0
 sudo docker push docker.io/lumjjb/nginx-test-operator-catalog:v0.1.0
+
+
+# 6 Add CatalogSource to openshift
+
+apiVersion: operators.coreos.com/v1alpha1
+kind: CatalogSource
+metadata:
+  name: my-custom-catlog
+  namespace: openshift-marketplace
+spec:
+  sourceType: grpc
+  image: docker.io/lumjjb/nginx-test-operator-catalog:v0.1.0
+  displayName: My Custom Catalog
+  updateStrategy:
+    registryPoll:
+      interval: 30m
 
 # Helpful Links
 # - https://github.com/operator-framework/community-operators
