@@ -26,8 +26,6 @@ helm uninstall nginx-sample-deploy
 # Build and push operator
 sudo operator-sdk build docker.io/lumjjb/nginx-test-operator:v0.0.1
 sudo docker push docker.io/lumjjb/nginx-test-operator:v0.0.1
-
-
 # Replace IMAGE_NAME
 
 # 3. Generating a ClusterServiceVersion (CSV) catalog
@@ -46,6 +44,16 @@ operator-sdk generate csv --csv-version 0.1.0
 # For testing it with OpenShift, ecosystem, it is slightly more involved...
 sudo operator-sdk bundle create docker.io/lumjjb/nginx-test-operator-bundle:v0.1.0
 sudo docker push docker.io/lumjjb/nginx-test-operator-bundle:v0.1.0
+operator-sdk bundle validate  docker.io/lumjjb/nginx-test-operator-bundle:v0.1.0
+
+
+# 5. Create Catalog to import in OpenShift
+
+opm index add \
+    -c docker \
+    --bundles docker.io/lumjjb/nginx-test-operator-bundle:v0.1.0 \
+    --tag docker.io/lumjjb/nginx-test-operator-catalog:v0.1.0
+sudo docker push docker.io/lumjjb/nginx-test-operator-catalog:v0.1.0
 
 # Helpful Links
 # - https://github.com/operator-framework/community-operators
