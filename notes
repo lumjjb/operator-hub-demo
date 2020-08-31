@@ -35,6 +35,20 @@ sudo docker push docker.io/lumjjb/nginx-test-operator:v0.0.1
 # - Use the operator-sdk tool:
 operator-sdk generate csv --csv-version 0.1.0
 
+# CHANGE CSV to add serviceaccounts usage
+        - apiGroups:
+          - rbac.authorization.k8s.io
+          resources:
+          - serviceaccounts
+          verbs:
+          - create
+          - delete
+          - get
+          - list
+          - patch
+          - update
+          - watch
+
 # - Or use the CSV generator online:
 # https://operatorhub.io/packages
 
@@ -73,6 +87,11 @@ spec:
   updateStrategy:
     registryPoll:
       interval: 30m
+
+
+# 7 Install operator and try out Custom, reousrce, if getting serviceaccount error, add perms to operator:
+# - deploy/crds/example.com_v1alpha1_nginx_cr.yaml
+# CHANGE image to bitnami/nginx AND 
 
 # Helpful Links
 # - https://github.com/operator-framework/community-operators
