@@ -8,6 +8,11 @@ operator-sdk new nginx-operator \
 # 2. Observe the artifacts created.
 # - The helm chart in nginx-operator/
 # - Try creating the helm chart sample 
+
+# Change image from nginx to bitnami/nginx, since OpenShift SCC configures users in a way that nginx image doesnt like
+helm install nginx-sample-deploy ./helm-charts/nginx
+helm uninstall nginx-sample-deploy
+
 # - The watches.yaml and operator around it that does the actual operator part of it
 #   - Observe build/Dockerfile
 #   - Observe watches.yaml
@@ -16,6 +21,14 @@ operator-sdk new nginx-operator \
 #   - Login to k8s cluster
 #   - operator-sdk run --local
 #   - oc apply -f deploy/crds/example.com_v1alpha1_nginx_cr.yaml
+#
+
+# Build and push operator
+operator-sdk build docker.io/lumjjb/nginx-test-operator:v0.0.1
+docker push docker.io/lumjjb/nginx-test-operator:v0.0.1
+
+
+# Replace IMAGE_NAME
 
 # 3. Generating a ClusterServiceVersion (CSV) catalog
 # - Use the operator-sdk tool:
@@ -31,7 +44,8 @@ operator-sdk generate csv --csv-version 0.1.0
 # For basic setup, you can use: https://github.com/operator-framework/community-operators testing framework that uses kind
 #
 # For testing it with OpenShift, ecosystem, it is slightly more involved...
-operator-sdk bundle create docker.io/lumjjb/nginx-test-operator:v0.1.0
+operator-sdk bundle create docker.io/lumjjb/nginx-test-operator-bundle:v0.1.0
+docker push docker.io/lumjjb/nginx-test-operator-bundle:v0.0.1
 
 # Helpful Links
 # - https://github.com/operator-framework/community-operators
