@@ -24,8 +24,8 @@ helm uninstall nginx-sample-deploy
 #
 
 # Build and push operator
-operator-sdk build docker.io/lumjjb/nginx-test-operator:v0.0.1
-docker push docker.io/lumjjb/nginx-test-operator:v0.0.1
+sudo operator-sdk build docker.io/lumjjb/nginx-test-operator:v0.0.1
+sudo docker push docker.io/lumjjb/nginx-test-operator:v0.0.1
 
 
 # Replace IMAGE_NAME
@@ -44,8 +44,8 @@ operator-sdk generate csv --csv-version 0.1.0
 # For basic setup, you can use: https://github.com/operator-framework/community-operators testing framework that uses kind
 #
 # For testing it with OpenShift, ecosystem, it is slightly more involved...
-operator-sdk bundle create docker.io/lumjjb/nginx-test-operator-bundle:v0.1.0
-docker push docker.io/lumjjb/nginx-test-operator-bundle:v0.0.1
+sudo operator-sdk bundle create docker.io/lumjjb/nginx-test-operator-bundle:v0.1.0
+sudo docker push docker.io/lumjjb/nginx-test-operator-bundle:v0.1.0
 
 # Helpful Links
 # - https://github.com/operator-framework/community-operators
