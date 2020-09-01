@@ -37,7 +37,7 @@ operator-sdk generate csv --csv-version 0.1.0
 
 # CHANGE CSV to add serviceaccounts usage
         - apiGroups:
-          - rbac.authorization.k8s.io
+          - ''
           resources:
           - serviceaccounts
           verbs:
@@ -86,7 +86,7 @@ spec:
   displayName: My Custom Catalog
   updateStrategy:
     registryPoll:
-      interval: 30m
+      interval: 5m
 
 
 # 7 Install operator and try out Custom, reousrce, if getting serviceaccount error, add perms to operator:
